@@ -11,8 +11,8 @@ probably be much less that the consumption of all containers.
 
 The script assumes you are logged into Cloud Foundry already. Alternatively you can use the login_cf function to do that
 
-For more information about cf cli see https://docs.cloudfoundry.org/cf-cli/install-go-cli.html
-For more information about carbon intensity of electricity see https://en.wikipedia.org/wiki/Emission_intensity
+- For more information about cf cli see https://docs.cloudfoundry.org/cf-cli/install-go-cli.html
+- For more information about carbon intensity of electricity see https://en.wikipedia.org/wiki/Emission_intensity
 
 Usage:
 

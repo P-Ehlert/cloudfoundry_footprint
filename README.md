@@ -1,6 +1,6 @@
 <h1>Cloud Foundry Footprint</h1> 
 
-Python script that estimates the carbon footprint of all Cloud Foundry (CF) applications of an organization.
+Python3 script that estimates the carbon footprint of all Cloud Foundry (CF) applications of an organization.
 The script uses basic 'cf cli' commands to count the number of running containers per space. This is then multiplied by
 an estimated average energy consumption.
 
@@ -9,14 +9,18 @@ depending on the container size. Here we simply assume 65 (100+30/2) containers 
 (databases, redis, etc.) is ignored because 1) we have no power consumption information of that and 2) it will
 probably be much less that the consumption of all containers.
 
-The script assumes you are logged into Cloud Foundry already. Alternatively you can use the login_cf function to do that
+At the moment the number of services in each space is counted, but this is not included in the carbon footprint
+calculations as we don't know anything about the exact impact.
+
+The script assumes you are logged into Cloud Foundry already using CF CLI v6.x. Alternatively you can use the
+login_cf function to do that.
 
 - For more information about cf cli see https://docs.cloudfoundry.org/cf-cli/install-go-cli.html
 - For more information about carbon intensity of electricity see https://en.wikipedia.org/wiki/Emission_intensity
 
 Usage:
 
-    cf_footprint.py [-h] [-y] [-c CARBON] [-s SPACE] [-v]
+    python3 cf_footprint.py [-h] [-y] [-c CARBON] [-s SPACE] [-v]
 
     optional arguments:
     -h, --help            show this help message and exit

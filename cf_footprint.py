@@ -9,7 +9,11 @@ depending on the container size. Here we simply assume 65 (100+30/2) containers 
 (databases, redis, etc.) is ignored because 1) we have no power consumption information of that and 2) it will
 probably be much less that the consumption of all containers.
 
-The script assumes you are logged into Cloud Foundry already. Alternatively you can use the login_cf function to do that
+At the moment the number of services in each space is counted, but this is not included in the carbon footprint
+calculations as we don't know anything about the exact impact.
+
+The script assumes you are logged into Cloud Foundry already using CF CLI v6.x. Alternatively you can use the
+login_cf function to do that.
 
 For more information about cf cli see https://docs.cloudfoundry.org/cf-cli/install-go-cli.html
 For more information about carbon intensity of electricity see https://en.wikipedia.org/wiki/Emission_intensity
@@ -100,6 +104,27 @@ def get_active_instances():
     else:
         raise RuntimeError("Error retrieving applications data", apps_output)
 
+def get_services():
+    """
+    Get the services in the current CF space
+    :return: integer, number of services the current CF space
+    :raises: RuntimeError when the expected output is not found
+    """
+    services = 0
+    if verbose: print("Retrieving applications services...", end='')
+    services_output = os.popen("cf services").read().splitlines()
+    if ("No services found" in services_output):
+        if verbose: print("Found 0 services")
+        return 0;
+    if verbose: print("ok");
+    for svs in services_output:
+        if svs:
+            services +=1
+    # each line is a service, but we should substract 2 for the header lines
+    services = services - 2
+    if verbose: print("Found {} services".format(services))
+    return services
+
 
 def calculate_footprint(active_instances):
     """
@@ -179,6 +204,7 @@ def main(args):
     if args.space:
         switch_to_cf_space(args.space)
         print_footprint(args, args.space, get_active_instances())
+        get_services()
     else:
         spaces = get_cf_spaces()
         for space in spaces:

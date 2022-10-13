@@ -43,5 +43,6 @@ Example usage:
      
 
 <h2>Version history:</h2>
+
   - Version 1.1: supports CF CLI v8.x
   - Version 1.0: supports CF CLI v6.x

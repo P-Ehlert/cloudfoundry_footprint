@@ -12,8 +12,8 @@ probably be much less that the consumption of all containers.
 At the moment the number of services in each space is counted, but this is not included in the carbon footprint
 calculations as we don't know anything about the exact impact.
 
-The script assumes you are logged into Cloud Foundry already using CF CLI v6.x. Alternatively you can use the
-login_cf function to do that.
+The script assumes you are logged into Cloud Foundry already using CF CLI v6.x (using v1.0 of this software) or CF CLI
+v8.x (with v1.1). Alternatively you can use the login_cf function to do that.
 
 - For more information about cf cli see https://docs.cloudfoundry.org/cf-cli/install-go-cli.html
 - For more information about carbon intensity of electricity see https://en.wikipedia.org/wiki/Emission_intensity
@@ -41,3 +41,7 @@ Example usage:
   This calculates the footprint per year of all active instances in a space called 'production', assuming the carbon
   intensity of the energy mix is 441 CO2e / kWh
      
+
+<h2>Version history:</h2>
+  - Version 1.1: supports CF CLI v8.x
+  - Version 1.0: supports CF CLI v6.x

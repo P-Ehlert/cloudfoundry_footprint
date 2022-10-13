@@ -76,7 +76,7 @@ def switch_to_cf_space(space):
     """
     if verbose: print("Switching to space {}...".format(space), end='')
     switch_output = os.popen("cf target -s " + space).read()
-    if ("api endpoint" in switch_output):
+    if ("API endpoint" in switch_output):
         if verbose: print("ok")
     else:
         raise RuntimeError("Error switching to space:", switch_output)
@@ -91,11 +91,16 @@ def get_active_instances():
     instances = 0
     if verbose: print("Retrieving applications data...", end='')
     apps_output = os.popen("cf apps").read().splitlines()
-    # iterate over lines and find applications that are 'started'
-    if ("OK" in apps_output):
+    if ("No apps found" in apps_output):
+        if verbose:
+            print("ok")
+            print("No apps found")
+        return 0
+    elif apps_output[2].startswith("name"):
+        # iterate over lines and find applications that are 'started'
         if verbose: print("ok");
         for line in list(apps_output):
-            match_obj = re.search(r"\sstarted\s*([0-9]?[0-9])/[0-9]?[0-9]", line)
+            match_obj = re.search(r"\sstarted\s*web:([0-9]?[0-9])/[0-9]?[0-9]", line)
             if match_obj:
                 instances += int(match_obj.group(1))
 
@@ -170,7 +175,7 @@ def process_arguments():
     if args.verbose:
         global verbose
         verbose = True
-    return args;
+    return args
 
 
 def print_footprint(args, name, active_instances):
